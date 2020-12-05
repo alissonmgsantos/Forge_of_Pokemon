@@ -1,27 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <Card />
+  <div class="container">
+    <Card
+      name="Pikachu"
+      type="Fire"
+      weight="100"
+      height="50"
+      image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+    />
+
+    <Card
+      name="Pikachu"
+      type="Fire"
+      weight="100"
+      height="50"
+      image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+    />
+  </div>
 </template>
 
 <script>
-import Card from './components/Card.vue'
-import  './assets/global.css'
+import Card from './components/Card.vue';
+import './assets/global.scss';
 export default {
   name: 'App',
   components: {
-    Card
-  }
-}
+    Card,
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>
