@@ -20,6 +20,9 @@
 </template>
 <script>
 export default {
+  data() {
+    return {};
+  },
   props: {
     name: { required: true },
     type: { required: true },
