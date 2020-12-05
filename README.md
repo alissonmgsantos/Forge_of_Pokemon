@@ -1,4 +1,4 @@
-# forge_of_pokemons
+# forge_of_pokemon
 
 ## Project setup
 
