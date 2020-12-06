@@ -7,7 +7,7 @@
     </h1>
     <!-- <div class="poke-ball" /> -->
     <!-- <img src="../assets/images/brush.png" /> -->
-    <router-link to="/">PRESS START</router-link>
+    <router-link to="/choose">PRESS START</router-link>
   </div>
 </template>
 
@@ -17,18 +17,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-h1 {
-  text-align: center;
-  color: #fff;
-  font-size: 5rem;
-  -webkit-text-stroke-width: 0.2rem;
-  -webkit-text-stroke-color: #333;
-  small {
-    font-size: 2.5rem;
-    color: #ff1900;
-    -webkit-text-stroke-width: 0.1rem;
-  }
-}
 .container {
   display: flex;
   flex-direction: column;
@@ -38,6 +26,19 @@ h1 {
   height: 100vh;
   align-items: center;
   justify-content: center;
+
+  h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 5rem;
+    -webkit-text-stroke-width: 0.2rem;
+    -webkit-text-stroke-color: #333;
+    small {
+      font-size: 2.5rem;
+      color: #ff1900;
+      -webkit-text-stroke-width: 0.1rem;
+    }
+  }
 
   img {
     padding-top: 10;
