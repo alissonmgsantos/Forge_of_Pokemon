@@ -12,18 +12,41 @@
         <input name="search" placeholder="Search pokemon" type="search" />
       </div>
       <div class="choose">
-        <div class="choose-pokemon" v-for="(item, index) in 100" :key="index">
-          <img
-            width="64"
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
-          />
+        <div
+          class="choose-pokemon"
+          v-for="(pokemon, index) in this.pokemons"
+          :key="index"
+        >
+          <img width="64" :src="pokemon.image" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+import api from '../config/api';
+export default {
+  data() {
+    return {
+      pokemons: [],
+    };
+  },
+  created() {
+    api.get('pokemon', { params: { limit: 140 } }).then((response) => {
+      response.data.results.map((pokemon) => {
+        this.pokemons.push({
+          id: pokemon.url.split('/')[6],
+          name: pokemon.name,
+          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+            pokemon.url.split('/')[6]
+          }.png`,
+        });
+      });
+    });
+
+    console.log(this.pokemons);
+  },
+};
 </script>
 <style lang="scss" scoped>
 .container {
@@ -71,7 +94,8 @@ export default {};
         align-items: center;
 
         :hover {
-          border: 0.2rem solid #433;
+          /* border: 0.2rem solid #433; */
+          background-color: red;
           cursor: pointer;
         }
       }

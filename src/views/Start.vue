@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>
-      FORGE <small>OF</small>
+      Battle <small>OF</small>
       <br />
       POKEMON'S
     </h1>
