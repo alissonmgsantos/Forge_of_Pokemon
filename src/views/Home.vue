@@ -1,8 +1,13 @@
 <template>
   <div class="container">
-    <div class="poke-ball" />
-    <img src="../assets/images/brush.png" />
-    <router-link to="/">Start</router-link>
+    <h1>
+      FORGE <small>OF</small>
+      <br />
+      POKEMON'S
+    </h1>
+    <!-- <div class="poke-ball" /> -->
+    <!-- <img src="../assets/images/brush.png" /> -->
+    <router-link to="/">PRESS START</router-link>
   </div>
 </template>
 
@@ -12,6 +17,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 5rem;
+  -webkit-text-stroke-width: 0.2rem;
+  -webkit-text-stroke-color: #333;
+  small {
+    font-size: 2.5rem;
+    color: #ff1900;
+    -webkit-text-stroke-width: 0.1rem;
+  }
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -22,20 +39,37 @@ export default {
   align-items: center;
   justify-content: center;
 
+  img {
+    padding-top: 10;
+    &::after {
+      position: absolute;
+      top: 145px;
+      right: 20px;
+      font-size: 40px;
+      color: black;
+      text-shadow: 0px 0px 5px black;
+      content: 'a';
+      z-index: 100;
+    }
+  }
   a {
     padding: 1rem 5rem;
-    background: #fff;
-    border: 3px solid red;
     border-radius: 0.8rem;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
-
+    font-weight: bold;
+    color: #fff;
+    -webkit-animation: blink 0.75s linear infinite;
+    -moz-animation: blink 0.75s linear infinite;
+    -ms-animation: blink 0.75s linear infinite;
+    -o-animation: blink 0.75s linear infinite;
+    animation: blink 0.75s linear infinite;
     &:hover {
-      background: #ccc;
+      font-size: 2.5rem;
+      color: #f34530;
     }
   }
 }
-
 .poke-ball {
   position: absolute;
   height: 10rem;
