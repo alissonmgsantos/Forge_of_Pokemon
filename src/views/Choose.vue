@@ -14,7 +14,7 @@
       <div class="choose">
         <div
           class="choose-pokemon"
-          v-for="(pokemon, index) in this.pokemons"
+          v-for="(pokemon, index) in datasource"
           :key="index"
         >
           <img width="64" :src="pokemon.image" />
@@ -24,27 +24,26 @@
   </div>
 </template>
 <script>
-import api from '../config/api';
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
       pokemons: [],
     };
   },
-  created() {
-    api.get('pokemon', { params: { limit: 140 } }).then((response) => {
-      response.data.results.map((pokemon) => {
-        this.pokemons.push({
-          id: pokemon.url.split('/')[6],
-          name: pokemon.name,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-            pokemon.url.split('/')[6]
-          }.png`,
-        });
-      });
-    });
+  computed: {
+    datasource() {
+      return this.$store.state.pokemon.datasource;
+    },
+  },
 
-    console.log(this.pokemons);
+  methods: {
+    ...mapActions('store/modules/pokemon', {
+      all: 'pokemon/getAll',
+    }),
+  },
+  mounted() {
+    this.$store.dispatch('pokemon/getAll');
   },
 };
 </script>
