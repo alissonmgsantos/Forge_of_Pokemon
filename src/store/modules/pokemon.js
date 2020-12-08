@@ -7,15 +7,11 @@ export default {
     datasource: [],
     selected: null,
   },
-  getters: {
-    allPokemons(state) {
-      return state.datasource;
-    },
-  },
+  getters: {},
   actions: {
     async getAll({ commit }) {
       try {
-        const { data } = await api.get('pokemon', { params: { limit: 140 } });
+        const { data } = await api.get('pokemon', { params: { limit: 60 } });
         commit('SET_DATA', data?.results);
       } catch (error) {
         console.log('error', error);
@@ -25,6 +21,7 @@ export default {
   mutations: {
     SET_DATA(state, payload) {
       payload.map((pokemon) => {
+        // if (pokemon.url.split('/')[6] % 3 == 1) {
         state.datasource.push({
           id: pokemon.url.split('/')[6],
           name: pokemon.name,
@@ -32,6 +29,7 @@ export default {
             pokemon.url.split('/')[6]
           }.png`,
         });
+        // }
       });
     },
   },

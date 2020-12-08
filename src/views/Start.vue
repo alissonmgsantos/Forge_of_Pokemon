@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>
-      Battle <small>OF</small>
+      Battle
       <br />
       POKEMON'S
     </h1>

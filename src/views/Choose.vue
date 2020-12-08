@@ -5,7 +5,7 @@
     <div class="menu-choose">
       <div class="header">
         <img
-          width="120"
+          width="100"
           src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
         />
         <h2 align="center">Choose battle pokemon</h2>
@@ -18,13 +18,14 @@
           :key="index"
         >
           <img width="64" :src="pokemon.image" />
+          <small>{{ pokemon.name }}</small>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -32,18 +33,18 @@ export default {
     };
   },
   computed: {
-    datasource() {
-      return this.$store.state.pokemon.datasource;
-    },
+    ...mapState('pokemon', {
+      datasource: (state) => state.datasource,
+    }),
   },
 
   methods: {
-    ...mapActions('store/modules/pokemon', {
-      all: 'pokemon/getAll',
+    ...mapActions('pokemon', {
+      all: 'getAll',
     }),
   },
-  mounted() {
-    this.$store.dispatch('pokemon/getAll');
+  created() {
+    this.all();
   },
 };
 </script>
@@ -52,7 +53,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   padding: 1rem;
   /* background: url('../assets/images/background.jpg') no-repeat center center
     fixed; */
@@ -78,24 +78,28 @@ export default {
       }
     }
     .choose {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       width: 100%;
       height: auto;
-      border: 0.2rem solid #333;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(5%, 0fr));
+      grid-template-columns: repeat(auto-fit, minmax(10%, 0fr));
       background-color: #2196f3;
-
+      :hover {
+        background-color: red;
+      }
       .choose-pokemon {
         border: 0.1rem solid #333;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        cursor: pointer;
 
-        :hover {
-          /* border: 0.2rem solid #433; */
-          background-color: red;
-          cursor: pointer;
+        small {
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+          color: #fff;
         }
       }
     }
