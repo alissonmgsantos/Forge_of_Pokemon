@@ -45,9 +45,10 @@ export default {
   padding: 1rem;
 
   .name {
-    width: 50%;
+    width: 80%;
     text-align: center;
-    margin: 1rem 0;
+    margin: 0 auto;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     border-bottom: 0.2rem solid red;
     font-weight: bold;
@@ -58,6 +59,7 @@ export default {
     text-align: center;
     th {
       font-size: 0.8rem;
+      text-transform: uppercase;
     }
     td {
       font-size: 0.6rem;

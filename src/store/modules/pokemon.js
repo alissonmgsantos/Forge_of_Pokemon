@@ -1,5 +1,8 @@
 import api from '../../config/api';
 
+const urlImage =
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
+
 export default {
   namespaced: true,
   state: {
@@ -17,6 +20,14 @@ export default {
         console.log('error', error);
       }
     },
+    async getSelected({ commit }, id) {
+      try {
+        const { data } = await api.get(`pokemon/${id}`);
+        commit('SET_SELECTED', data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
   },
   mutations: {
     SET_DATA(state, payload) {
@@ -25,12 +36,21 @@ export default {
         state.datasource.push({
           id: pokemon.url.split('/')[6],
           name: pokemon.name,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-            pokemon.url.split('/')[6]
-          }.png`,
+          image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
         });
         // }
       });
+    },
+    SET_SELECTED(state, payload) {
+      const { id, name, height, types, weight } = payload;
+      state.selected = {
+        id,
+        name,
+        height,
+        type: types[0].type.name,
+        weight,
+        image: `${urlImage}/${id}.png`,
+      };
     },
   },
 };

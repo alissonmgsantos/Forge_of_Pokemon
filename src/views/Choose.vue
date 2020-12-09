@@ -1,21 +1,26 @@
 <template>
   <div class="container">
     <h1 align="left">Select pokemon</h1>
-    <div></div>
     <div class="menu-choose">
       <div class="header">
-        <img
-          width="100"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+        <!-- <img width="100" :src="selected.image" /> -->
+        <Card
+          :name="selected.name"
+          :type="selected.type"
+          :height="selected.height"
+          :weight="selected.weight"
+          :image="selected.image"
         />
         <h2 align="center">Choose battle pokemon</h2>
         <input name="search" placeholder="Search pokemon" type="search" />
       </div>
       <div class="choose">
         <div
-          class="choose-pokemon"
           v-for="(pokemon, index) in datasource"
           :key="index"
+          class="choose-pokemon"
+          :class="pokemon.id == selected.id ? 'selected' : null"
+          @click="getSelected(pokemon.id)"
         >
           <img width="64" :src="pokemon.image" />
           <small>{{ pokemon.name }}</small>
@@ -26,7 +31,11 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
+import Card from '../components/Card';
 export default {
+  components: {
+    Card,
+  },
   data() {
     return {
       pokemons: [],
@@ -35,16 +44,19 @@ export default {
   computed: {
     ...mapState('pokemon', {
       datasource: (state) => state.datasource,
+      selected: (state) => state.selected,
     }),
   },
 
   methods: {
     ...mapActions('pokemon', {
-      all: 'getAll',
+      getAll: 'getAll',
+      getSelected: 'getSelected',
     }),
   },
   created() {
-    this.all();
+    this.getAll();
+    this.getSelected(1);
   },
 };
 </script>
@@ -55,10 +67,8 @@ export default {
   align-items: flex-start;
   padding: 1rem;
   /* background: url('../assets/images/background.jpg') no-repeat center center
-    fixed; */
-  /* background-size: cover; */
-  height: 100vh;
-
+    fixed;
+   background-size: cover; */
   h1 {
     border-bottom: 0.2rem solid #333;
   }
@@ -84,6 +94,8 @@ export default {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(10%, 0fr));
       background-color: #2196f3;
+      text-transform: capitalize;
+      .selected,
       :hover {
         background-color: red;
       }
