@@ -4,26 +4,28 @@
     <div class="menu-choose">
       <div class="header">
         <!-- <img width="100" :src="selected.image" /> -->
-        <Card
-          :name="selected.name"
-          :type="selected.type"
-          :height="selected.height"
-          :weight="selected.weight"
-          :image="selected.image"
-        />
+        <div v-if="selected && selected.name">
+          <Card
+            :name="selected.name"
+            :type="selected.type"
+            :height="selected.height"
+            :weight="selected.weight"
+            :image="selected.image"
+          />
+        </div>
         <h2 align="center">Choose battle pokemon</h2>
         <input name="search" placeholder="Search pokemon" type="search" />
       </div>
-      <div class="choose">
+      <div class="choose" v-if="datasource.length > 0">
         <div
-          v-for="(pokemon, index) in datasource"
-          :key="index"
+          v-for="index in 60"
+          :key="datasource[index].id"
           class="choose-pokemon"
-          :class="pokemon.id == selected.id ? 'selected' : null"
-          @click="getSelected(pokemon.id)"
+          :class="datasource[index].id == selected.id ? 'selected' : ''"
+          @click="getSelected(datasource[index].id)"
         >
-          <img width="64" :src="pokemon.image" />
-          <small>{{ pokemon.name }}</small>
+          <img width="64" :src="datasource[index].image" alt="Image" />
+          <small>{{ datasource[index].name }}</small>
         </div>
       </div>
     </div>

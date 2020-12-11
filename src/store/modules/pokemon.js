@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     loading: false,
+    data: [],
     datasource: [],
     selected: null,
   },
@@ -14,7 +15,7 @@ export default {
   actions: {
     async getAll({ commit }) {
       try {
-        const { data } = await api.get('pokemon', { params: { limit: 1118 } });
+        const { data } = await api.get('pokemon', { params: { limit: -1 } });
         commit('SET_DATA', data?.results);
       } catch (error) {
         console.log('error', error);
@@ -32,14 +33,13 @@ export default {
   mutations: {
     SET_DATA(state, payload) {
       payload.map((pokemon) => {
-        if (pokemon.url.split('/')[6] % 3 == 1) {
-          state.datasource.push({
-            id: pokemon.url.split('/')[6],
-            name: pokemon.name,
-            image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
-          });
-        }
+        state.datasource.push({
+          id: pokemon.url.split('/')[6],
+          name: pokemon.name,
+          image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
+        });
       });
+      state.data = state.datasource;
     },
     SET_SELECTED(state, payload) {
       const { id, name, height, types, weight } = payload;

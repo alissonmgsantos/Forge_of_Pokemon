@@ -13,7 +13,9 @@
 
 <script>
 export default {
-  components: {},
+  created() {
+    this.$store.dispatch('pokemon/getAll');
+  },
 };
 </script>
 <style lang="scss" scoped>
