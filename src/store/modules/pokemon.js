@@ -15,6 +15,7 @@ export default {
     async getAll({ commit }) {
       try {
         if (
+          !localStorage.getItem('vuex') ||
           JSON.parse(localStorage.getItem('vuex')).pokemon.datasource.length < 1
         ) {
           const { data } = await api.get('pokemon', { params: { limit: -1 } });
@@ -33,10 +34,9 @@ export default {
       }
     },
 
-    async getEnemy({ state, commit }) {
+    async getEnemy({ commit }) {
       try {
-        let random =
-          Math.floor(Math.random() * (state.datasource.length - 0)) + 0;
+        let random = Math.floor(Math.random() * (1118 - 1)) + 1;
         const { data } = await api.get(`pokemon/${random}`);
         commit('SET_ENEMY', data);
       } catch (error) {
@@ -47,11 +47,13 @@ export default {
   mutations: {
     SET_DATA(state, payload) {
       payload.map((pokemon) => {
-        state.datasource.push({
-          id: pokemon.url.split('/')[6],
-          name: pokemon.name,
-          image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
-        });
+        if (!pokemon.name.includes('max')) {
+          state.datasource.push({
+            id: pokemon.url.split('/')[6],
+            name: pokemon.name,
+            image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
+          });
+        }
       });
     },
     SET_SELECTED(state, payload) {

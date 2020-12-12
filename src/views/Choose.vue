@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <h1 align="left">Select pokemon</h1>
     <div class="menu-choose">
       <div class="header">
-        <!-- <img width="100" :src="selected.image" /> -->
+        <h1>Choose your pokemon</h1>
+        <div class="counter">counter</div>
+      </div>
+      <div class="content">
         <div v-if="selected && selected.name">
           <Card
             :name="selected.name"
@@ -13,8 +15,7 @@
             :image="selected.image"
           />
         </div>
-        <!-- <h2 align="center">Choose battle pokemon</h2> -->
-
+        <h1 class="versus effect-stroke">VS</h1>
         <div v-if="enemy && enemy.name">
           <Card
             :name="enemy.name"
@@ -41,10 +42,13 @@
           :class="pokemon.id == selected.id ? 'selected' : ''"
           @click="getSelected(pokemon.id)"
         >
-          <img width="45" :src="pokemon.image" alt="Image" />
+          <img width="64" :src="pokemon.image" alt="Image" />
           <small>{{ pokemon.name }}</small>
         </div>
       </div>
+      <template v-if="datasource.length === 0">
+        <div>aqui</div>
+      </template>
     </div>
   </div>
 </template>
@@ -59,7 +63,7 @@ export default {
     return {
       search: '',
       pokemons: this.$store.state.pokemon.datasource,
-      limit: 50,
+      limit: 52,
     };
   },
   watch: {
@@ -72,7 +76,7 @@ export default {
       },
     },
     pokemons(value) {
-      return (this.limit = value.length > 60 ? 60 : value.length);
+      return (this.limit = value.length > 52 ? 52 : value.length);
     },
   },
 
@@ -111,31 +115,44 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   padding: 1rem;
-  /* background: url('../assets/images/background.jpg') no-repeat center center
-    fixed;
-   background-size: cover; */
+  min-height: 100%;
+  background: #60cc9c;
   h1 {
-    border-bottom: 0.2rem solid #333;
+    color: #fff;
+    font-size: 2rem;
   }
-
   .menu-choose {
     width: 100%;
     .header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
+    }
+    .content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      .versus {
+        font-size: 6rem;
+        text-align: center;
+      }
     }
     .search {
       input {
+        color: #fff;
         height: 2.5rem;
         width: 100%;
         padding: 0 1rem;
         border: 0.1rem solid #333;
         text-align: center;
         font-size: 28px;
+        background: transparent;
+        border-radius: 2rem;
+        margin-bottom: 1rem;
       }
     }
     .choose {
@@ -143,16 +160,17 @@ export default {
       margin: 0 auto;
       width: 100%;
       height: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10%, 0fr));
-      background-color: #2196f3;
+      display: flex;
+      flex-wrap: wrap;
       text-transform: capitalize;
+      /* grid-template-columns: repeat(auto-fit, minmax(10%, 0fr)); */
       .selected,
       :hover {
-        background-color: red;
+        background-color: #4fa17c;
       }
       .choose-pokemon {
-        border: 0.1rem solid #333;
+        width: 100px;
+        height: auto;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -160,10 +178,7 @@ export default {
         cursor: pointer;
 
         small {
-          width: 100%;
           text-align: center;
-          font-weight: bold;
-          color: #fff;
         }
       }
     }
