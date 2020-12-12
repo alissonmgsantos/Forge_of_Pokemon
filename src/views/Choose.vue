@@ -14,18 +14,23 @@
           />
         </div>
         <h2 align="center">Choose battle pokemon</h2>
-        <input name="search" placeholder="Search pokemon" type="search" />
+        <input
+          name="search"
+          placeholder="Search pokemon"
+          type="search"
+          v-model="search"
+        />
       </div>
       <div class="choose" v-if="datasource.length > 0">
         <div
-          v-for="index in 60"
-          :key="datasource[index].id"
+          v-for="(pokemon, index) in pokemons.slice(0, limit)"
+          :key="index"
           class="choose-pokemon"
-          :class="datasource[index].id == selected.id ? 'selected' : ''"
-          @click="getSelected(datasource[index].id)"
+          :class="pokemon.id == selected.id ? 'selected' : ''"
+          @click="getSelected(pokemon.id)"
         >
-          <img width="64" :src="datasource[index].image" alt="Image" />
-          <small>{{ datasource[index].name }}</small>
+          <img width="64" :src="pokemon.image" alt="Image" />
+          <small>{{ pokemon.name }}</small>
         </div>
       </div>
     </div>
@@ -40,9 +45,25 @@ export default {
   },
   data() {
     return {
-      pokemons: [],
+      search: '',
+      pokemons: this.$store.state.pokemon.datasource,
+      limit: 60,
     };
   },
+  watch: {
+    search(value) {
+      this.searchPokemon(value);
+    },
+    '$store.state.pokemon.datasource': {
+      handler(value) {
+        this.pokemons = value;
+      },
+    },
+    pokemons(value) {
+      return (this.limit = value.length > 60 ? 60 : value.length);
+    },
+  },
+
   computed: {
     ...mapState('pokemon', {
       datasource: (state) => state.datasource,
@@ -55,6 +76,15 @@ export default {
       getAll: 'getAll',
       getSelected: 'getSelected',
     }),
+
+    searchPokemon(name) {
+      if (name) {
+        return (this.pokemons = this.datasource.filter((s) =>
+          s.name.includes(name)
+        ));
+      }
+      this.pokemons = this.datasource;
+    },
   },
   created() {
     this.getAll();

@@ -6,8 +6,6 @@ const urlImage =
 export default {
   namespaced: true,
   state: {
-    loading: false,
-    data: [],
     datasource: [],
     selected: null,
   },
@@ -15,8 +13,12 @@ export default {
   actions: {
     async getAll({ commit }) {
       try {
-        const { data } = await api.get('pokemon', { params: { limit: -1 } });
-        commit('SET_DATA', data?.results);
+        if (
+          JSON.parse(localStorage.getItem('vuex')).pokemon.datasource.length < 1
+        ) {
+          const { data } = await api.get('pokemon', { params: { limit: -1 } });
+          commit('SET_DATA', data?.results);
+        }
       } catch (error) {
         console.log('error', error);
       }
@@ -39,7 +41,6 @@ export default {
           image: `${urlImage}/${pokemon.url.split('/')[6]}.png`,
         });
       });
-      state.data = state.datasource;
     },
     SET_SELECTED(state, payload) {
       const { id, name, height, types, weight } = payload;
