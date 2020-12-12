@@ -13,10 +13,22 @@
             :image="selected.image"
           />
         </div>
-        <h2 align="center">Choose battle pokemon</h2>
+        <!-- <h2 align="center">Choose battle pokemon</h2> -->
+
+        <div v-if="enemy && enemy.name">
+          <Card
+            :name="enemy.name"
+            :type="enemy.type"
+            :height="enemy.height"
+            :weight="enemy.weight"
+            :image="enemy.image"
+          />
+        </div>
+      </div>
+      <div class="search">
         <input
           name="search"
-          placeholder="Search pokemon"
+          placeholder="SEARCH"
           type="search"
           v-model="search"
         />
@@ -29,7 +41,7 @@
           :class="pokemon.id == selected.id ? 'selected' : ''"
           @click="getSelected(pokemon.id)"
         >
-          <img width="64" :src="pokemon.image" alt="Image" />
+          <img width="45" :src="pokemon.image" alt="Image" />
           <small>{{ pokemon.name }}</small>
         </div>
       </div>
@@ -47,7 +59,7 @@ export default {
     return {
       search: '',
       pokemons: this.$store.state.pokemon.datasource,
-      limit: 60,
+      limit: 50,
     };
   },
   watch: {
@@ -68,6 +80,7 @@ export default {
     ...mapState('pokemon', {
       datasource: (state) => state.datasource,
       selected: (state) => state.selected,
+      enemy: (state) => state.enemy,
     }),
   },
 
@@ -75,12 +88,13 @@ export default {
     ...mapActions('pokemon', {
       getAll: 'getAll',
       getSelected: 'getSelected',
+      getEnemy: 'getEnemy',
     }),
 
     searchPokemon(name) {
       if (name) {
         return (this.pokemons = this.datasource.filter((s) =>
-          s.name.includes(name)
+          s.name.includes(`${name}`.toLowerCase())
         ));
       }
       this.pokemons = this.datasource;
@@ -89,6 +103,7 @@ export default {
   created() {
     this.getAll();
     this.getSelected(1);
+    this.getEnemy();
   },
 };
 </script>
@@ -112,15 +127,20 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
+    }
+    .search {
       input {
         height: 2.5rem;
+        width: 100%;
         padding: 0 1rem;
-        border: 0.15rem solid #333;
-        border-radius: 1rem;
+        border: 0.1rem solid #333;
+        text-align: center;
+        font-size: 28px;
       }
     }
     .choose {
       margin-top: 0.5rem;
+      margin: 0 auto;
       width: 100%;
       height: auto;
       display: grid;

@@ -8,6 +8,7 @@ export default {
   state: {
     datasource: [],
     selected: null,
+    enemy: null,
   },
   getters: {},
   actions: {
@@ -31,6 +32,17 @@ export default {
         console.log('error', error);
       }
     },
+
+    async getEnemy({ state, commit }) {
+      try {
+        let random =
+          Math.floor(Math.random() * (state.datasource.length - 0)) + 0;
+        const { data } = await api.get(`pokemon/${random}`);
+        commit('SET_ENEMY', data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
   },
   mutations: {
     SET_DATA(state, payload) {
@@ -45,6 +57,18 @@ export default {
     SET_SELECTED(state, payload) {
       const { id, name, height, types, weight } = payload;
       state.selected = {
+        id,
+        name,
+        height,
+        type: types[0].type.name,
+        weight,
+        image: `${urlImage}/${id}.png`,
+      };
+    },
+
+    SET_ENEMY(state, payload) {
+      const { id, name, height, types, weight } = payload;
+      state.enemy = {
         id,
         name,
         height,

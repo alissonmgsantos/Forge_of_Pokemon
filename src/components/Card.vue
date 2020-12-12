@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img :src="image" alt="" width="200" />
+    <img :src="image" alt="" width="150" />
     <div class="name">
       <span>{{ name }}</span>
     </div>
@@ -38,11 +38,12 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0.1rem solid #ccc;
   border-radius: 5%;
   width: 15rem;
-  height: 20rem;
   padding: 1rem;
+  img {
+    margin: 0 auto;
+  }
 
   .name {
     width: 80%;
