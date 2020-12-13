@@ -32,9 +32,10 @@
         <button v-on:click="attack">Give up</button>
       </div>
       <template v-if="hasResult">
-        <h1 v-if="playerHealth <= 0" class="result effect-stroke">YOU LOSER</h1>
-        <h1 v-if="enemyHealth <= 0" class="result effect-stroke">YOU WIN</h1>
-        <a class="animation-blink">PLAY AGAIN</a>
+        <h1 v-if="message" class="result effect-stroke">
+          {{ message }}
+        </h1>
+        <a class="animation-blink" v-on:click="playAgain">PLAY AGAIN</a>
       </template>
     </div>
   </div>
@@ -53,11 +54,27 @@ export default {
     return {
       playerHealth: 100,
       enemyHealth: 100,
+      message: '',
     };
   },
   watch: {
     enemyHealth() {
       this.playerHealth -= this.randomDanger();
+    },
+    hasResult() {
+      switch (true) {
+        case this.playerHealth > this.enemyHealth:
+          this.message = 'YOU WIN';
+          break;
+        case this.playerHealth < this.enemyHealth:
+          this.message = 'YOU LOSER';
+
+          break;
+        default:
+          this.message = 'Empate';
+          break;
+      }
+      return this.message;
     },
   },
   computed: {
@@ -75,6 +92,10 @@ export default {
     },
     attack() {
       this.enemyHealth -= this.randomDanger();
+    },
+    playAgain() {
+      this.playerHealth = this.playerHealth * 0 + 100;
+      this.enemyHealth = this.enemyHealth * 0 + 100;
     },
   },
 };
@@ -126,7 +147,12 @@ export default {
       text-align: center;
     }
     a {
+      color: #fff;
       font-size: 3rem;
+      cursor: pointer;
+      &:hover {
+        color: #f34530;
+      }
     }
   }
 }
