@@ -3,7 +3,7 @@
     <div class="menu-choose">
       <div class="header">
         <h1>Choose your pokemon</h1>
-        <h1 class="counter effect-stroke">{{ counter }}</h1>
+        <h1 class="counter effect-stroke animation-blink">{{ counter }}</h1>
       </div>
       <div class="content">
         <div v-if="selected && selected.name">
@@ -13,6 +13,7 @@
             :height="selected.height"
             :weight="selected.weight"
             :image="selected.image"
+            :card_width="150"
           />
         </div>
         <h1 class="versus effect-stroke">VS</h1>
@@ -23,6 +24,7 @@
             :height="enemy.height"
             :weight="enemy.weight"
             :image="enemy.image"
+            :card_width="150"
           />
         </div>
       </div>
@@ -126,9 +128,9 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  min-height: 100%;
-  background: #60cc9c;
+  padding: 0 1rem;
+  flex: 1;
+
   h1 {
     color: #fff;
     font-size: 2rem;
@@ -180,7 +182,6 @@ export default {
       display: flex;
       flex-wrap: wrap;
       text-transform: capitalize;
-      /* grid-template-columns: repeat(auto-fit, minmax(10%, 0fr)); */
       .selected,
       :hover {
         background-color: #4fa17c;

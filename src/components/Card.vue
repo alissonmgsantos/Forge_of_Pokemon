@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img :src="image" alt="" width="100" />
+    <img :src="image" alt="" :width="card_width" />
     <div class="name">
       <span>{{ name }}</span>
     </div>
@@ -29,6 +29,7 @@ export default {
     weight: { required: true },
     height: { required: true },
     image: { required: true },
+    card_width: { required: true },
   },
 };
 </script>

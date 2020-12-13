@@ -10,7 +10,7 @@ body,
 #app {
   height: 100vh;
   margin: 0;
-  background: #fafafa;
+  background: #60cc9c;
 }
 
 h1,
@@ -27,6 +27,13 @@ a {
   text-decoration: none;
 }
 
+.animation-blink {
+  -webkit-animation: blink 0.99s linear infinite;
+  -moz-animation: blink 0.99s linear infinite;
+  -ms-animation: blink 0.99s linear infinite;
+  -o-animation: blink 0.99s linear infinite;
+  animation: blink 0.99s linear infinite;
+}
 @keyframes blink {
   0% {
     opacity: 1;

@@ -1,13 +1,15 @@
 <template>
   <div class="container">
-    <h1>
+    <h1 class="effect-stroke">
       Battle
       <br />
-      POKEMON'S
+      POKEMON
     </h1>
     <!-- <div class="poke-ball" /> -->
     <!-- <img src="../assets/images/brush.png" /> -->
-    <router-link to="/choose">PRESS START</router-link>
+    <router-link to="/choose" class="animation-blink effect-stroke"
+      >PRESS START</router-link
+    >
   </div>
 </template>
 
@@ -33,13 +35,6 @@ export default {
     text-align: center;
     color: #fff;
     font-size: 5rem;
-    -webkit-text-stroke-width: 0.2rem;
-    -webkit-text-stroke-color: #333;
-    small {
-      font-size: 2.5rem;
-      color: #ff1900;
-      -webkit-text-stroke-width: 0.1rem;
-    }
   }
 
   img {
@@ -62,11 +57,7 @@ export default {
     text-transform: uppercase;
     font-weight: bold;
     color: #fff;
-    -webkit-animation: blink 0.75s linear infinite;
-    -moz-animation: blink 0.75s linear infinite;
-    -ms-animation: blink 0.75s linear infinite;
-    -o-animation: blink 0.75s linear infinite;
-    animation: blink 0.75s linear infinite;
+
     &:hover {
       font-size: 2.5rem;
       color: #f34530;
