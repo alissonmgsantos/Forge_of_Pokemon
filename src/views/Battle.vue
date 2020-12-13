@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <div v-if="selected && selected.name">
+      <div v-if="selected && selected.name" class="health">
         <Card
           :name="selected.name"
           :type="selected.type"
@@ -10,9 +10,10 @@
           :image="selected.image"
           :card_width="300"
         />
+        <HealthBar :HP="playerHealth" />
       </div>
       <h1 class="versus effect-stroke">VS</h1>
-      <div v-if="enemy && enemy.name">
+      <div v-if="enemy && enemy.name" class="health">
         <Card
           :name="enemy.name"
           :type="enemy.type"
@@ -21,25 +22,60 @@
           :image="enemy.image"
           :card_width="300"
         />
+        <HealthBar :HP="enemyHealth" />
       </div>
+    </div>
+    <div class="panel">
+      <div v-if="!hasResult" class="actions">
+        <button v-on:click="attack">Attack</button>
+        <button v-on:click="attack">Especial</button>
+        <button v-on:click="attack">Give up</button>
+      </div>
+      <template v-if="hasResult">
+        <h1 v-if="playerHealth <= 0" class="result effect-stroke">YOU LOSER</h1>
+        <h1 v-if="enemyHealth <= 0" class="result effect-stroke">YOU WIN</h1>
+        <a class="animation-blink">PLAY AGAIN</a>
+      </template>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex';
 import Card from '../components/Card';
+import HealthBar from '../components/HealthBar';
+
 export default {
   components: {
     Card,
+    HealthBar,
   },
   data() {
-    return {};
+    return {
+      playerHealth: 100,
+      enemyHealth: 100,
+    };
+  },
+  watch: {
+    enemyHealth() {
+      this.playerHealth -= this.randomDanger();
+    },
   },
   computed: {
     ...mapState('pokemon', {
       selected: (state) => state.selected,
       enemy: (state) => state.enemy,
     }),
+    hasResult() {
+      return this.playerHealth <= 0 || this.enemyHealth <= 0;
+    },
+  },
+  methods: {
+    randomDanger() {
+      return Math.floor(Math.random() * (10 - 1)) + 1;
+    },
+    attack() {
+      this.enemyHealth -= this.randomDanger();
+    },
   },
 };
 </script>
@@ -49,19 +85,48 @@ export default {
   flex-direction: column;
   padding: 1rem;
   width: 100%;
-  h1 {
-    color: #fff;
-    font-size: 2rem;
-  }
   .content {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-
     .versus {
       font-size: 6rem;
       text-align: center;
+    }
+
+    .health {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .actions {
+      button {
+        margin: 1rem 0.5rem;
+        width: 5rem;
+        height: 5rem;
+        border-radius: 100%;
+        border: 0.15rem solid #a28e8e;
+        cursor: pointer;
+        font-weight: bolder;
+        text-transform: uppercase;
+        &:hover {
+          filter: brightness(85%);
+        }
+      }
+    }
+    .result {
+      font-size: 6rem;
+      text-align: center;
+    }
+    a {
+      font-size: 3rem;
     }
   }
 }
