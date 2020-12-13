@@ -47,7 +47,10 @@ export default {
   mutations: {
     SET_DATA(state, payload) {
       payload.map((pokemon) => {
-        if (!pokemon.name.includes('max')) {
+        if (
+          !pokemon.name.includes('max') &&
+          !pokemon.name.includes('pikachu-')
+        ) {
           state.datasource.push({
             id: pokemon.url.split('/')[6],
             name: pokemon.name,

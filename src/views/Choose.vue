@@ -3,7 +3,7 @@
     <div class="menu-choose">
       <div class="header">
         <h1>Choose your pokemon</h1>
-        <div class="counter">counter</div>
+        <h1 class="counter effect-stroke">{{ counter }}</h1>
       </div>
       <div class="content">
         <div v-if="selected && selected.name">
@@ -42,7 +42,7 @@
           :class="pokemon.id == selected.id ? 'selected' : ''"
           @click="getSelected(pokemon.id)"
         >
-          <img width="64" :src="pokemon.image" alt="Image" />
+          <img width="60" :src="pokemon.image" alt="Image" />
           <small>{{ pokemon.name }}</small>
         </div>
       </div>
@@ -64,9 +64,15 @@ export default {
       search: '',
       pokemons: this.$store.state.pokemon.datasource,
       limit: 52,
+      counter: 30,
     };
   },
   watch: {
+    counter(value) {
+      if (value === 0) {
+        this.$router.push('battle');
+      }
+    },
     search(value) {
       this.searchPokemon(value);
     },
@@ -109,6 +115,11 @@ export default {
     this.getSelected(1);
     this.getEnemy();
   },
+  mounted() {
+    setInterval(() => {
+      this.counter -= 1;
+    }, 1000);
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -129,6 +140,12 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+
+      .counter {
+        font-size: 3.5rem;
+        text-align: center;
+        padding: 0.5rem;
+      }
     }
     .content {
       display: flex;

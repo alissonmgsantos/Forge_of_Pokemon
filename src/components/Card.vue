@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img :src="image" alt="" width="110" />
+    <img :src="image" alt="" width="100" />
     <div class="name">
       <span>{{ name }}</span>
     </div>
