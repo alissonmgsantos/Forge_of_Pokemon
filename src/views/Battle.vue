@@ -28,7 +28,7 @@
     <div class="panel">
       <div v-if="!hasResult" class="actions">
         <button v-on:click="attack">Attack</button>
-        <button v-on:click="attack">Especial</button>
+        <button v-on:click="attack('especial')">Especial</button>
         <button v-on:click="attack">Give up</button>
       </div>
       <template v-if="hasResult">
@@ -58,9 +58,6 @@ export default {
     };
   },
   watch: {
-    enemyHealth() {
-      this.playerHealth -= this.randomDanger();
-    },
     hasResult() {
       switch (true) {
         case this.playerHealth > this.enemyHealth:
@@ -87,15 +84,25 @@ export default {
     },
   },
   methods: {
-    randomDanger() {
-      return Math.floor(Math.random() * (10 - 1)) + 1;
+    randomDanger(max, min) {
+      return Math.floor(Math.random() * (max - min)) + min;
     },
-    attack() {
-      this.enemyHealth -= this.randomDanger();
+    attack(type) {
+      switch (type) {
+        case 'especial':
+          this.enemyHealth -= this.randomDanger(25, 15);
+          this.playerHealth -= this.randomDanger(25, 15);
+          break;
+
+        default:
+          this.enemyHealth -= this.randomDanger(10, 5);
+          this.playerHealth -= this.randomDanger(10, 5);
+          break;
+      }
     },
     playAgain() {
-      this.playerHealth = this.playerHealth * 0 + 100;
-      this.enemyHealth = this.enemyHealth * 0 + 100;
+      this.playerHealth = 100;
+      this.enemyHealth = 100;
     },
   },
 };
