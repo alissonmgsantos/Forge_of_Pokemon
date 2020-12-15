@@ -28,7 +28,7 @@
     <div class="panel">
       <div v-if="!hasResult" class="actions">
         <button v-on:click="attack">Attack</button>
-        <button v-on:click="attack('especial')">Especial</button>
+        <button v-on:click="attack">Especial</button>
         <button v-on:click="attack">Give up</button>
       </div>
       <template v-if="hasResult">
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Card from '../components/Card';
 import HealthBar from '../components/HealthBar';
 
@@ -52,8 +52,6 @@ export default {
   },
   data() {
     return {
-      playerHealth: 100,
-      enemyHealth: 100,
       message: '',
     };
   },
@@ -79,27 +77,34 @@ export default {
       selected: (state) => state.selected,
       enemy: (state) => state.enemy,
     }),
+    ...mapState('battle', {
+      playerHealth: 'playerHealth',
+      enemyHealth: 'enemyHealth',
+    }),
     hasResult() {
       return this.playerHealth <= 0 || this.enemyHealth <= 0;
     },
   },
   methods: {
+    ...mapActions('battle', {
+      attack: 'attack',
+    }),
     randomDanger(max, min) {
       return Math.floor(Math.random() * (max - min)) + min;
     },
-    attack(type) {
-      switch (type) {
-        case 'especial':
-          this.enemyHealth -= this.randomDanger(25, 15);
-          this.playerHealth -= this.randomDanger(25, 15);
-          break;
+    // attack(type) {
+    //   switch (type) {
+    //     case 'especial':
+    //       this.enemyHealth -= this.randomDanger(25, 15);
+    //       this.playerHealth -= this.randomDanger(25, 15);
+    //       break;
 
-        default:
-          this.enemyHealth -= this.randomDanger(10, 5);
-          this.playerHealth -= this.randomDanger(10, 5);
-          break;
-      }
-    },
+    //     default:
+    //       this.enemyHealth -= this.randomDanger(10, 5);
+    //       this.playerHealth -= this.randomDanger(10, 5);
+    //       break;
+    //   }
+    // },
     playAgain() {
       this.playerHealth = 100;
       this.enemyHealth = 100;
