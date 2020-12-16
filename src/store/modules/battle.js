@@ -7,10 +7,6 @@ export default {
   state: {
     playerHealth: 100,
     enemyHealth: 100,
-    results: {
-      victory: 0,
-      lost: 0,
-    },
   },
 
   getters: {},

@@ -8,7 +8,7 @@
           :height="selected.height"
           :weight="selected.weight"
           :image="selected.image"
-          :card_width="300"
+          :card_width="200"
         />
         <HealthBar :HP="playerHealth" />
       </div>
@@ -20,7 +20,7 @@
           :height="enemy.height"
           :weight="enemy.weight"
           :image="enemy.image"
-          :card_width="300"
+          :card_width="200"
         />
         <HealthBar :HP="enemyHealth" />
       </div>
@@ -30,6 +30,7 @@
         <button v-on:click="attack">Attack</button>
         <button v-on:click="especial">Especial</button>
         <button v-on:click="heal">Heal</button>
+        <button v-on:click="giveUp">Give Up</button>
       </div>
       <template v-if="hasResult">
         <h1 v-if="message" class="result effect-stroke">
@@ -92,6 +93,9 @@ export default {
       heal: 'heal',
       playAgain: 'playAgain',
     }),
+    giveUp() {
+      this.$router.push('/');
+    },
   },
 };
 </script>
@@ -101,6 +105,9 @@ export default {
   flex-direction: column;
   padding: 1rem;
   width: 100%;
+  min-height: 100%;
+  justify-content: center;
+
   .content {
     display: flex;
     flex-direction: row;
@@ -138,7 +145,7 @@ export default {
       }
     }
     .result {
-      font-size: 6rem;
+      font-size: 5rem;
       text-align: center;
     }
     a {
