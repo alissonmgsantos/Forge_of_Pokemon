@@ -28,8 +28,8 @@
     <div class="panel">
       <div v-if="!hasResult" class="actions">
         <button v-on:click="attack">Attack</button>
-        <button v-on:click="attack">Especial</button>
-        <button v-on:click="attack">Give up</button>
+        <button v-on:click="especial">Especial</button>
+        <button v-on:click="heal">Heal</button>
       </div>
       <template v-if="hasResult">
         <h1 v-if="message" class="result effect-stroke">
@@ -88,27 +88,10 @@ export default {
   methods: {
     ...mapActions('battle', {
       attack: 'attack',
+      especial: 'especial',
+      heal: 'heal',
+      playAgain: 'playAgain',
     }),
-    randomDanger(max, min) {
-      return Math.floor(Math.random() * (max - min)) + min;
-    },
-    // attack(type) {
-    //   switch (type) {
-    //     case 'especial':
-    //       this.enemyHealth -= this.randomDanger(25, 15);
-    //       this.playerHealth -= this.randomDanger(25, 15);
-    //       break;
-
-    //     default:
-    //       this.enemyHealth -= this.randomDanger(10, 5);
-    //       this.playerHealth -= this.randomDanger(10, 5);
-    //       break;
-    //   }
-    // },
-    playAgain() {
-      this.playerHealth = 100;
-      this.enemyHealth = 100;
-    },
   },
 };
 </script>

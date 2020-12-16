@@ -18,12 +18,18 @@ export default {
   actions: {
     attack: ({ commit }) => {
       commit('SET_DANGER_ENEMY', randomDanger(10, 1));
+      commit('SET_DANGER_PLAYER', randomDanger(10, 1));
     },
     especial: ({ commit }) => {
-      commit('');
+      commit('SET_DANGER_ENEMY', randomDanger(10, 5));
+      commit('SET_DANGER_PLAYER', randomDanger(10, 5));
     },
     playAgain: ({ commit }) => {
       commit('SET_PLAY_AGAIN');
+    },
+    heal: ({ commit }) => {
+      commit('SET_HEAL', randomDanger(10, 5));
+      commit('SET_HEAL', randomDanger(10, 5));
     },
   },
 
@@ -33,6 +39,12 @@ export default {
     },
     SET_DANGER_ENEMY: (state, payload) => {
       state.enemyHealth -= payload;
+    },
+    SET_HEAL: (state, payload) => {
+      state.playerHealth =
+        state.playerHealth + payload > 100 ? 100 : state.playerHealth + payload;
+      state.enemyHealth =
+        state.enemyHealth + payload > 100 ? 100 : state.enemyHealth + payload;
     },
     SET_RESULT: (state) => {
       state;
