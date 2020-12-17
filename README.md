@@ -1,24 +1,21 @@
-# forge_of_pokemon
+<h1 align="center">
+	<b>Battle Pokemon</b>
+</h1>
 
-## Project setup
-```
-npm install
-```
+<p align="center">
+<img src="https://raw.githubusercontent.com/alissonmgsantos/Forge_of_Pokemon/master/public/apresentation.png" width="500" height="300" alt="Image project"/>
+</p>
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 🚀 Para inicializar o projeto é necessário
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- Clonar ou baixar o projeto.
+- Instalar as depêndencias `npm install`.
+- Inicializar o projeto `npm run serve`.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 🛠 Tecnologias utilizadas
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue
+- Axios
+- Vuex
+- SCSS
+- PokeAPI
